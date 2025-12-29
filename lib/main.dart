@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:food_delivery_mobile_app/home.dart';
+import 'package:food_delivery_mobile_app/home/home.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
