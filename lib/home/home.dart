@@ -23,6 +23,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
+
     return Scaffold(
       body: SafeArea(
         child: IndexedStack(
@@ -37,7 +39,7 @@ class _HomeState extends State<Home> {
       ),
 
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.deepOrange,
+        selectedItemColor: primaryColor,
         onTap: changedIndex, 
         // Pour changer l'élément à sélectionner (commençant à 0 et allant à nbr item - 1)
         currentIndex: currentIndex,
@@ -45,7 +47,7 @@ class _HomeState extends State<Home> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "Favorites"),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: "Notifications"),
+          BottomNavigationBarItem(icon: Icon( Icons.notifications), label: "Notifications"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile")
         ],
       ),
