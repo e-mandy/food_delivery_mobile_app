@@ -24,11 +24,11 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
-    final whitePartColor = Colors.white;
+    final whitePartColor = const Color.fromARGB(255, 239, 239, 239);
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color.fromARGB(255, 166, 166, 166),
         gradient: LinearGradient(
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,

@@ -31,7 +31,7 @@ class _FoodItemState extends State<FoodItem> {
           height: height / 4.5,
         
           decoration: BoxDecoration(
-            color: Colors.black12,
+            color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(16.0)),
           ),
         
@@ -81,14 +81,12 @@ class _FoodItemState extends State<FoodItem> {
                       fontSize: 10.0,
                       color: Colors.grey
                     )),
-
-                    Text('1km 10min delivery', style: TextStyle(
-                      fontSize: 10.0,
-                      color: Colors.grey
-                    ))
-
                   ],
-                )
+                ),
+                Text('1km 10min delivery', style: TextStyle(
+                  fontSize: 10.0,
+                  color: Colors.grey
+                ))
               ],
             ),
           )
