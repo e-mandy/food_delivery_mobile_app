@@ -6,11 +6,20 @@ class HomeContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const spacer = SizedBox(height: 32);
+    var backgroundColor = Colors.white;
+
     return Padding(
       padding: EdgeInsets.all(16.0),
       child: Column(
         children: [
-          Delivery()
+          Delivery(),
+          spacer,
+          SearchBar(
+            leading: Icon(Icons.search),
+            hintText: "What did you eat today ?",
+            backgroundColor: WidgetStateProperty.all(backgroundColor),
+          )
         ],
       )
     );
