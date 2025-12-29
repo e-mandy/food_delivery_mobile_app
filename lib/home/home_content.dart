@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_mobile_app/home/components/category.dart';
 import 'package:food_delivery_mobile_app/home/components/delivery.dart';
 
 class HomeContent extends StatelessWidget {
@@ -8,6 +9,7 @@ class HomeContent extends StatelessWidget {
   Widget build(BuildContext context) {
     const spacer = SizedBox(height: 32);
     var backgroundColor = Colors.white;
+    final greyColor = Colors.grey;
 
     return Padding(
       padding: EdgeInsets.all(16.0),
@@ -19,7 +21,9 @@ class HomeContent extends StatelessWidget {
             leading: Icon(Icons.search),
             hintText: "What did you eat today ?",
             backgroundColor: WidgetStateProperty.all(backgroundColor),
-          )
+          ),
+          spacer,
+          Category()
         ],
       )
     );
