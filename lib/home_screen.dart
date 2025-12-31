@@ -37,6 +37,15 @@ class HomeScreen extends StatelessWidget {
                 "Classic Pizza",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
+              // ... après le bloc Classic Pizza
+const SizedBox(height: 30),
+const Text(
+  "Trending Pizza",
+  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+),
+const SizedBox(height: 15),
+_buildTrendingPizza(), // Appel de notre nouveau widget
+const SizedBox(height: 100), // Espace pour ne pas être caché par la barre de menu
               const SizedBox(height: 15),
               
               // Ici on utilise une Row pour mettre deux cartes côte à côte
@@ -178,22 +187,107 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNav() {
-    return Container(
-      height: 80,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 10)],
-      ),
-      child: const Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Icon(Icons.home, color: Colors.orange, size: 30),
-          Icon(Icons.search, color: Colors.grey),
-          Icon(Icons.favorite_border, color: Colors.grey),
-          Icon(Icons.person_outline, color: Colors.grey),
-        ],
-      ),
-    );
-  }
+ Widget _buildBottomNav() {
+  return Container(
+    margin: const EdgeInsets.all(20), // Crée l'effet "flottant"
+    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(40),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.1),
+          blurRadius: 20,
+          offset: const Offset(0, 10),
+        ),
+      ],
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        // Bouton Home actif
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+          decoration: BoxDecoration(
+            color: Colors.orange,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: const Row(
+            children: [
+              Icon(Icons.home, color: Colors.white),
+              SizedBox(width: 8),
+              Text("Home", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            ],
+          ),
+        ),
+        const Icon(Icons.search, color: Colors.grey),
+        const Icon(Icons.favorite_border, color: Colors.grey),
+        const Icon(Icons.person_outline, color: Colors.grey),
+      ],
+    ),
+  );
+}
+}
+
+Widget _buildTrendingPizza() {
+  return Container(
+    height: 180,
+    width: double.infinity,
+    decoration: BoxDecoration(
+      color: const Color(0xFFFFF9E5), // Le jaune pâle de la maquette
+      borderRadius: BorderRadius.circular(30),
+    ),
+    child: Stack(
+      children: [
+        // Texte et Infos
+        Padding(
+          padding: const EdgeInsets.all(25.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "Get A\nSlice Of\nCheese",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  height: 1.1,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                "Delivery Available 24/7",
+                style: TextStyle(color: Colors.grey[700], fontSize: 12),
+              ),
+            ],
+          ),
+        ),
+        
+        // Image de la pizza (à droite)
+        Positioned(
+          right: -20,
+          top: 10,
+          bottom: 10,
+          child: Image.network(
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs13kyoQZGlwBCUi73VW5UJvtV93NT5iEonQ&s', // Pizza ronde sans fond
+            fit: BoxFit.contain,
+          ),
+        ),
+
+        // Le bouton Favori (Cœur)
+        Positioned(
+          top: 15,
+          left: 15,
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: const BoxDecoration(
+              color: Colors.orange,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(Icons.favorite, color: Colors.white, size: 18),
+          ),
+        ),
+      ],
+    ),
+  );
 }
