@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'detail_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -158,8 +159,11 @@ class HomeScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    // C'est ici qu'on ira vers l'écran 
-                  },
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => DetailsScreen()),
+  );
+},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange,
                     padding: const EdgeInsets.symmetric(horizontal: 5),
