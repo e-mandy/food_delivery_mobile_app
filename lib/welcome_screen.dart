@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
-// Attention : vérifie bien si ton package est 'slider_button' ou 'slide_button' 
-// dans ton pubspec.yaml. Ici j'utilise SliderButton (le plus commun).
+import 'home_screen.dart'; 
 import 'package:slider_button/slider_button.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -17,8 +15,6 @@ class WelcomeScreen extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 20),
-
-              // --- ZONE DES CATÉGORIES ---
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -29,8 +25,6 @@ class WelcomeScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: 16),
-
-              // --- ZONE IMAGE ---
               AspectRatio(
                 aspectRatio: 16 / 9,
                 child: Container(
@@ -47,8 +41,6 @@ class WelcomeScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: 16),
-
-              // --- ZONE TEXTES ---
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40),
                 child: Column(
@@ -81,10 +73,8 @@ class WelcomeScreen extends StatelessWidget {
 
               const SizedBox(height: 24),
 
-              // --- ZONE DU BOUTON DYNAMIQUE ---
-              // On appelle notre fonction ici pour afficher le vrai bouton !
               _buildSwipeButton(context),
-              
+           
               const SizedBox(height: 20),
             ],
           ),
@@ -93,7 +83,6 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 
-  // Fonction pour construire les petits textes du haut
   Widget _buildCategoryItem(String text, Color color) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -104,7 +93,7 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 
-  // NOTRE NOUVEAU WIDGET DYNAMIQUE
+  // Widget pour le bouton slider
   Widget _buildSwipeButton(BuildContext context) {
     return Center(
       child: SliderButton(
@@ -116,7 +105,7 @@ class WelcomeScreen extends StatelessWidget {
           );
           return true; // On confirme au bouton que l'action est faite
         },
-        // Le texte qui s'affiche dans la barre
+
         label: const Text(
           "Swipe To Explore",
           style: TextStyle(
@@ -125,7 +114,6 @@ class WelcomeScreen extends StatelessWidget {
               fontSize: 17
           ),
         ),
-        // L'icône qui bouge (le cercle orange)
         icon: const Center(
           child: Icon(
             Icons.arrow_forward_ios,
@@ -133,7 +121,6 @@ class WelcomeScreen extends StatelessWidget {
             size: 20.0,
           ),
         ),
-        // Design du bouton
         width: MediaQuery.of(context).size.width * 0.85, // 85% de la largeur
         radius: 50,
         buttonColor: Colors.orange,
