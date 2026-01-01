@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_delivery_mobile_app/home/home.dart';
+import 'package:food_delivery_mobile_app/onboarding/onboarding_page.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: Home(),
+      home: const OnboardingPage(),
     );
   }
 }
