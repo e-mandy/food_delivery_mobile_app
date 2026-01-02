@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_mobile_app/LandingPage/components/food_carousel.dart';
 import 'package:food_delivery_mobile_app/LandingPage/components/scrolling_bar.dart';
 
 class LandingPage extends StatelessWidget {
@@ -10,7 +11,8 @@ class LandingPage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            ScrollingBar()
+            ScrollingBar(),
+            FoodCarousel()
           ],
         ),
       )
