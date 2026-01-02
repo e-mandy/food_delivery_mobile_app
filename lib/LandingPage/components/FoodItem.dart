@@ -6,12 +6,24 @@ class FoodItem extends StatelessWidget {
   final String name;
   final IconData icon;
 
+  String foodShow(){
+    return name.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
     return Row(
       children: [
-        Icon(icon),
-        Text(name)
+        Icon(icon, color: primaryColor,),
+        SizedBox(width: 5),
+        Text(name),
+        SizedBox(width: 5),
+        CircleAvatar(
+          radius: 4,
+          backgroundColor: primaryColor,
+        ),
+        SizedBox(width: 15)
       ],
     );
   }
