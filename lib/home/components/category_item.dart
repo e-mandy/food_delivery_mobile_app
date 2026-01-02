@@ -25,7 +25,7 @@ class _CategoryItemState extends State<CategoryItem> {
 
     return GestureDetector(
           onTap: changeCategoryState,
-          child: Container(
+          child: SizedBox(
             height: 120,
             width: width / 4,
             child: Column(

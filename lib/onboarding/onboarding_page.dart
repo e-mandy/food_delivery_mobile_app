@@ -1,8 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_mobile_app/home/home.dart';
 
-class OnboardingPage extends StatelessWidget {
+class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
+
+  @override
+  State<OnboardingPage> createState() => _OnboardingPageState();
+}
+
+class _OnboardingPageState extends State<OnboardingPage> {
+  late ScrollController _scrollController;
+  final List<String> _pizzaTypes = [
+    "Neapolitan",
+    "Margherita",
+    "Pepperoni",
+    "Hawaiian",
+    "Veggie",
+    "Meat Lovers",
+    "Sicilian",
+    "Chicago Deep Dish",
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    // Start scrolling after the widget is built
+    WidgetsBinding.instance.addPostFrameCallback((_) => _startAutoScroll());
+  }
+
+  void _startAutoScroll() {
+    // Animate to a very distant point over a long duration for constant speed linear feel
+    // 50 pixels per second seems like a reasonable marquee speed
+    // If we want it to run 'forever', we just pick a huge duration/distance
+    // Ideally we'd reset, but for a short onboarding session, a long scroll is fine.
+    // However, if the user interacts, we might want to pause or restart.
+    // For a simple background marquee, we often ignore touch or re-trigger.
+
+    // Check if attached to avoid errors
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(
+          hours: 100,
+        ), // Slower speed (approx 100x slower then previous if it was too fast)
+        curve: Curves.linear,
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,20 +63,42 @@ class OnboardingPage extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 20),
-            // Header decorations - approximating the design's top "tabs"
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildHeaderItem("Neapolitan", true),
-                  _buildHeaderItem("Margherita", false),
-                  _buildHeaderItem("Pepperoni", false),
-                ],
+            // Marquee Header
+            SizedBox(
+              height: 40,
+              child: ListView.builder(
+                controller: _scrollController,
+                scrollDirection: Axis.horizontal,
+                physics:
+                    const NeverScrollableScrollPhysics(), // User shouldn't hijack the marquee usually, or maybe they can? Let's disable manual scroll for "banner" feel.
+                itemCount:
+                    100000, // Large finite number to allow scrolling for a long time
+                itemBuilder: (context, index) {
+                  // Infinite scrolling by using modulo
+                  final text = _pizzaTypes[index % _pizzaTypes.length];
+                  // Highlight "Neapolitan" roughly every time it appears, OR just random colors?
+                  // The original had Neapolitan as active. Let's make every 3rd one 'active' looking or just style them all nicely.
+                  // User asked for "Neapolitan, Margherita ... is a marquee".
+                  // Let's just alternate styles or keep them uniform.
+                  // Original: Neapolitan (Active), others (Inactive).
+                  // Let's make "Neapolitan" always active color if found, or just random?
+                  // Let's keep the first item "Neapolitan" style logic but repeatedly?
+                  // Actually, marquee implies all are equal usually. Let's style them all as 'options'.
+                  final isExampleActive = text == "Neapolitan";
+
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: _buildHeaderItem(text, isExampleActive),
+                  );
+                },
               ),
             ),
             const SizedBox(height: 10),
-            const Divider(color: Colors.orange, thickness: 1, endIndent: 200), // Visual flair
+            const Divider(
+              color: Colors.orange,
+              thickness: 1,
+              endIndent: 200,
+            ), // Visual flair
 
             const Spacer(),
 
@@ -76,7 +149,7 @@ class OnboardingPage extends StatelessWidget {
                 ),
               ),
             ),
-            
+
             const SizedBox(height: 30),
 
             // Title and Subtitle
@@ -94,8 +167,9 @@ class OnboardingPage extends StatelessWidget {
                       ),
                       children: [
                         TextSpan(
-                            text: "Authentic Pizza\n",
-                            style: TextStyle(color: Colors.deepOrange)),
+                          text: "Authentic Pizza\n",
+                          style: TextStyle(color: Colors.deepOrange),
+                        ),
                         TextSpan(text: "Delivered to Your Door!"),
                       ],
                     ),
@@ -104,15 +178,12 @@ class OnboardingPage extends StatelessWidget {
                   const Text(
                     "Order now for authentic, delicious\nFresh pizza!",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 16,
-                    ),
+                    style: TextStyle(color: Colors.grey, fontSize: 16),
                   ),
                 ],
               ),
             ),
-            
+
             const Spacer(),
 
             // Bottom Area
@@ -135,7 +206,10 @@ class OnboardingPage extends StatelessWidget {
                     ),
                     child: const Text(
                       "Start",
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   const Text(
@@ -146,16 +220,16 @@ class OnboardingPage extends StatelessWidget {
                 ],
               ),
             ),
-            
+
             TextButton(
-              onPressed: () {}, 
+              onPressed: () {},
               child: const Text(
                 "Privacy policy",
                 style: TextStyle(
                   color: Colors.grey,
                   decoration: TextDecoration.underline,
                 ),
-              )
+              ),
             ),
             const SizedBox(height: 10),
           ],
@@ -165,16 +239,25 @@ class OnboardingPage extends StatelessWidget {
   }
 
   Widget _buildHeaderItem(String text, bool isActive) {
+    // If we want a uniform look for the marquee, we might remove the 'isActive' specific styling
+    // or maybe highlight the text color.
+    // For now, let's keep the logic passed from the builder.
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        if (isActive) 
-          const Icon(Icons.local_pizza, color: Colors.deepOrange, size: 16),
+        // Always show icon for marquee loop richness? Or only for 'isActive'?
+        // The prompt says "neopolitian, magherita .... is a marquee".
+        // Let's add the pizza icon to all of them for better rhythm.
+        const Icon(Icons.local_pizza, color: Colors.deepOrange, size: 16),
         const SizedBox(width: 5),
         Text(
           text,
           style: TextStyle(
-            color: isActive ? Colors.black : Colors.grey,
+            color: isActive
+                ? Colors.black
+                : Colors.grey, // Bold/Black if 'active' (Neapolitan)
             fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+            fontSize: 16,
           ),
         ),
       ],

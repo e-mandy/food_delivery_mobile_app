@@ -23,53 +23,57 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor = Theme.of(context).primaryColor;
-    final whitePartColor = const Color.fromARGB(255, 239, 239, 239);
-
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 166, 166, 166),
-        gradient: LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          colors: [
-            primaryColor.withValues(alpha: 0.8),
-            whitePartColor,
-            whitePartColor,
-            whitePartColor,
-            whitePartColor,
-            whitePartColor,
-            whitePartColor,
-            whitePartColor,
-            whitePartColor,
-          ]
+    return Scaffold(
+      backgroundColor: const Color(0xFFF5F5F8), // Light grey background
+      body: SafeArea(
+        child: IndexedStack(
+          index: currentIndex,
+          children: const [
+            HomeContent(),
+            Favorite(),
+            NotificationContent(),
+            Profile()
+          ],
         )
       ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: SafeArea(
-          child: IndexedStack(
-            index: currentIndex,
-            children: [
-              HomeContent(),
-              Favorite(),
-              NotificationContent(),
-              Profile()
-            ],
-        )
-        ),
       
-        bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: primaryColor,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 20,
+              offset: const Offset(0, -5),
+            )
+          ]
+        ),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: Colors.deepOrange,
+          unselectedItemColor: Colors.grey.withOpacity(0.5),
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
           onTap: changedIndex, 
-          // Pour changer l'élément à sélectionner (commençant à 0 et allant à nbr item - 1)
           currentIndex: currentIndex,
-          unselectedItemColor: Colors.grey,
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-            BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "Favorites"),
-            BottomNavigationBarItem(icon: Icon( Icons.notifications), label: "Notifications"),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile")
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_filled), 
+              label: "Home"
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search), 
+              label: "Search"
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite_border), 
+              label: "Favorites"
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline), 
+              label: "Profile"
+            )
           ],
         ),
       ),

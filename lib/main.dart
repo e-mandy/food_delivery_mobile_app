@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:food_delivery_mobile_app/home/home.dart';
 import 'package:food_delivery_mobile_app/onboarding/onboarding_page.dart';
 
 void main() {
