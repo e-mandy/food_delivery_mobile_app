@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_mobile_app/LandingPage/components/FoodItem.dart';
 import 'dart:math' as math;
 
-import 'package:marquee/marquee.dart';
-
 class ScrollingBar extends StatelessWidget {
   const ScrollingBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    double angle = 10.0;
+    double angle = math.pi / 24.0;
     final List<Map<String, dynamic>> Foods = [
       {"name": "Burger Nexus", "icon": Icons.brunch_dining_rounded},
       {"name": "Pizza Pixel", "icon": Icons.local_pizza},
@@ -22,7 +20,7 @@ class ScrollingBar extends StatelessWidget {
   final secondaryColor = Color.fromARGB(255, 255, 154, 65);
 
     return Transform.rotate(
-      angle: math.pi / 24.0,
+      angle: angle,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Container(
