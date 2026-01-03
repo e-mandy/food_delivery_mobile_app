@@ -12,6 +12,7 @@ class LandingPage extends StatelessWidget {
         child: Column(
           children: [
             ScrollingBar(),
+            SizedBox(height: 20),
             FoodCarousel()
           ],
         ),

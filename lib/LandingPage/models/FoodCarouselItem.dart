@@ -7,23 +7,32 @@ class FoodcarouselItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
     return Stack(
       children: [
         Container(
-          width: 250,
+          width: 300,
           decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover)
+            image: DecorationImage(
+              image: AssetImage(image), 
+              fit: BoxFit.cover,
+            ),
+          borderRadius: BorderRadius.all(Radius.circular(20))
           )
         ),
         Positioned(
-          width: 50,
+          width: 300 * 0.7,
           top: 10,
           left: 10,
-          child: Text(text, style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),)
+          child: Text(text.toUpperCase(), 
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 40,
+              height: 1,
+              color: Colors.white,
+              fontFamily: "Schoolbell-Regular",
+              wordSpacing: 300,
+            ),
+          )
         )
       ]
     );

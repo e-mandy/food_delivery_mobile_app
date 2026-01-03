@@ -30,7 +30,7 @@ class _FoodCarouselState extends State<FoodCarousel> {
 
     // Pour écouter le scroll des éléments de la liste.
     return SizedBox(
-      height: 400,
+      height: 300,
       child: PageView.builder(
         scrollDirection: Axis.horizontal,
         controller: _controller,
