@@ -16,6 +16,7 @@ class _SwiperActionState extends State<SwiperAction> {
         padding: const EdgeInsets.only(left: 12, right: 12),
         child: SlideAction(
             text: "Swipe to Explore",
+            borderRadius: 50,
             sliderButtonIcon: Text("Start",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -28,7 +29,11 @@ class _SwiperActionState extends State<SwiperAction> {
             textStyle: TextStyle(
               fontSize: 15
             ),
+            onSubmit: (){
+              // bro
+            },
           ),
+          
       ),
       );
   }
