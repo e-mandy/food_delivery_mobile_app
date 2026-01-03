@@ -24,6 +24,7 @@ class ScrollingBar extends StatelessWidget {
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Container(
+          margin: EdgeInsets.only(top: 35),
           padding: EdgeInsets.only(top: 25, bottom: 25, left: 12, right: 12),
           decoration: BoxDecoration(
             border: Border(

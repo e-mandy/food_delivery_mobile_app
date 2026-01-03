@@ -26,7 +26,7 @@ class FoodcarouselItem extends StatelessWidget {
           child: Text(text.toUpperCase(), 
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 40,
+              fontSize: 30,
               height: 1,
               color: Colors.white,
               fontFamily: "Schoolbell-Regular",

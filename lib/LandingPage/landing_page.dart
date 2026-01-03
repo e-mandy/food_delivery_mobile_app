@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_mobile_app/LandingPage/components/food_carousel.dart';
+import 'package:food_delivery_mobile_app/LandingPage/components/landing_title.dart';
 import 'package:food_delivery_mobile_app/LandingPage/components/scrolling_bar.dart';
 
 class LandingPage extends StatelessWidget {
@@ -12,8 +13,9 @@ class LandingPage extends StatelessWidget {
         child: Column(
           children: [
             ScrollingBar(),
-            SizedBox(height: 20),
-            FoodCarousel()
+            SizedBox(height: 60),
+            FoodCarousel(),
+            LandingTitle(),
           ],
         ),
       )

@@ -13,7 +13,7 @@ class _FoodCarouselState extends State<FoodCarousel> {
 
   final PageController _controller = PageController(
     initialPage: 0,
-    viewportFraction: 0.8
+    viewportFraction: 0.7
   );
 
 
@@ -29,8 +29,9 @@ class _FoodCarouselState extends State<FoodCarousel> {
     ];
 
     // Pour écouter le scroll des éléments de la liste.
-    return SizedBox(
-      height: 300,
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      height: 320,
       child: PageView.builder(
         scrollDirection: Axis.horizontal,
         controller: _controller,
@@ -50,11 +51,16 @@ class _FoodCarouselState extends State<FoodCarousel> {
               double angle = index - page;
 
               return Transform.rotate(
-                angle: (angle.toInt() < 0) ? math.pi / 48 : (angle.toInt() > 0) ? -(math.pi / 48) : (angle.toInt() == 0) ? 0 : null!,
+                angle: (angle.toInt() < 0) ? -(math.pi / 48) : (angle.toInt() > 0) ? (math.pi / 48) : (angle.toInt() == 0) ? 0 : null!,
                 child: child,
               );
             },
-            child: Center(child: FoodcarouselItem(image: fastFoodShows[index]['image']!, text: fastFoodShows[index]['text']!)),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Center(child: 
+                FoodcarouselItem(image: fastFoodShows[index]['image']!, text: fastFoodShows[index]['text']!)
+              ),
+            ),
           );
         },
       )
