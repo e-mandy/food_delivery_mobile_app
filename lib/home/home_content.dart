@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_mobile_app/details/details_page.dart';
 
 class HomeContent extends StatelessWidget {
-  const HomeContent({super.key});
+  final VoidCallback onOpenDetails;
+  const HomeContent({super.key, required this.onOpenDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -132,12 +132,7 @@ class HomeContent extends StatelessWidget {
 
         // Trending Pizza Card
         GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const DetailsPage()),
-            );
-          },
+          onTap: onOpenDetails,
           child: Stack(
             children: [
               Container(

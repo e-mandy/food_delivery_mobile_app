@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_mobile_app/home/home.dart';
+import 'package:food_delivery_mobile_app/onboarding/slide_to_start.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -189,35 +190,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
             // Bottom Area
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => Home()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepOrange,
-                      shape: const CircleBorder(),
-                      padding: const EdgeInsets.all(20),
-                    ),
-                    child: const Text(
-                      "Start",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const Text(
-                    "Swipe To Explore",
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                  const Icon(Icons.keyboard_arrow_right, color: Colors.grey),
-                ],
+              child: SlideToStart(
+                onSubmitted: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => Home()),
+                  );
+                },
               ),
             ),
 

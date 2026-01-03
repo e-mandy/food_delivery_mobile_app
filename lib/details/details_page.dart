@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DetailsPage extends StatefulWidget {
-  const DetailsPage({super.key});
+  final VoidCallback onClose;
+  const DetailsPage({super.key, required this.onClose});
 
   @override
   State<DetailsPage> createState() => _DetailsPageState();
@@ -19,51 +20,60 @@ class _DetailsPageState extends State<DetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Eat Fresh Pizza ",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
+    return Material(
+      color: Colors.white,
+      child: Column(
+        children: [
+          // Custom AppBar equivalent
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 10,
+              left: 10,
+              right: 20,
+              bottom: 10,
             ),
-            Icon(
-              Icons.local_pizza,
-              color: Colors.deepOrange,
-              size: 20,
-            ), // Placeholder for the triangular icon
-          ],
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
-          onPressed: () => Navigator.pop(context),
-        ),
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 20),
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.grey.withOpacity(0.2)),
-            ),
-            child: const Icon(
-              Icons.notifications_none,
-              color: Colors.black,
-              size: 20,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.keyboard_arrow_down,
+                    color: Colors.black,
+                    size: 30,
+                  ),
+                  onPressed: widget.onClose,
+                ),
+                const Row(
+                  children: [
+                    Text(
+                      "Eat Fresh Pizza ",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        decoration: TextDecoration.none,
+                        fontFamily: 'Roboto',
+                      ),
+                    ),
+                    Icon(Icons.local_pizza, color: Colors.deepOrange, size: 20),
+                  ],
+                ),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.grey.withOpacity(0.2)),
+                  ),
+                  child: const Icon(
+                    Icons.notifications_none,
+                    color: Colors.black,
+                    size: 20,
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
-      body: Column(
-        children: [
+
           // Header Text
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
