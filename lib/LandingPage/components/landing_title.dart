@@ -11,7 +11,6 @@ class LandingTitle extends StatelessWidget {
       width: screenWidth * 0.8,
       child: Center(
         child: Column(
-          spacing: -3,
           children: [
             Text("Authentic Pizza",
               style: TextStyle(
