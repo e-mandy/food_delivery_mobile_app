@@ -15,7 +15,6 @@ class _SwiperActionState extends State<SwiperAction> {
       child: Padding(
         padding: const EdgeInsets.only(left: 12, right: 12),
         child: SlideAction(
-            text: "Swipe to Explore",
             borderRadius: 50,
             sliderButtonIcon: Text("Start",
               style: TextStyle(
@@ -25,13 +24,16 @@ class _SwiperActionState extends State<SwiperAction> {
             elevation: 0,
             outerColor: const Color.fromARGB(255, 241, 241, 241),
             innerColor: Theme.of(context).primaryColor,
-            textColor: Colors.black,
-            textStyle: TextStyle(
-              fontSize: 15
-            ),
-            onSubmit: (){
-              // bro
-            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 130.0, right: 13),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Swipe To Explore"),
+                  Icon(Icons.keyboard_double_arrow_right)
+                ],
+              ),
+            )
           ),
           
       ),
