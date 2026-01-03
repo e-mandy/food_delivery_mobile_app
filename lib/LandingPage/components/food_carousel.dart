@@ -30,7 +30,7 @@ class _FoodCarouselState extends State<FoodCarousel> {
 
     // Pour écouter le scroll des éléments de la liste.
     return Container(
-      margin: EdgeInsets.only(bottom: 20),
+      margin: EdgeInsets.only(bottom: 30),
       height: 320,
       child: PageView.builder(
         scrollDirection: Axis.horizontal,
