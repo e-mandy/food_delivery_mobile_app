@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_mobile_app/LandingPage/models/FoodCarouselItem.dart';
+import 'dart:math' as math;
 
 class FoodCarousel extends StatefulWidget {
   const FoodCarousel({super.key});
@@ -9,59 +10,54 @@ class FoodCarousel extends StatefulWidget {
 }
 
 class _FoodCarouselState extends State<FoodCarousel> {
-  late ScrollController _scrollController;
-  double _scrollOffset = 0.0;
 
-  @override
-  void initState(){
-    super.initState();
+  final PageController _controller = PageController(
+    initialPage: 0,
+    viewportFraction: 0.8
+  );
 
-    _scrollController = ScrollController();
-    _scrollController.addListener((){
-      setState(() {
-        _scrollOffset = _scrollController.offset;
-      });
-    });
-  }
+
 
   @override
   Widget build(BuildContext context) {
 
-    final List<Map<String, String>> FastFoodShows = [
+    final List<Map<String, String>> fastFoodShows = [
       {'image': "assets/pizza.jpeg", "text": "The pizza Burger Pie"},
       {'image': "assets/burger.jpeg", "text": "Le Burger Qui Tue"},
       {'image': "assets/pepperoni.jpeg", "text": "The Pepperoni You Want"},
       {'image': "assets/salad.jpeg", "text": "La Salade Qui Sale Mdr"},
     ];
 
-    double itemWidth = 250.0;
-    double screenCenter = MediaQuery.of(context).size.width;
-
     // Pour écouter le scroll des éléments de la liste.
-    return NotificationListener<ScrollNotification>(
-      onNotification: (notification) => true,
-      child: SizedBox(
-        height: 200,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          reverse: true,
-          itemCount: FastFoodShows.length,
-          controller: _scrollController,
-          itemBuilder: (context, index){
-            
-            double itemCenter = (index * itemWidth) + (itemWidth / 2);
-              
-              // Distance entre le centre de l'item et ce que l'utilisateur voit (scroll + milieu écran)
-              double distanceRelative = (itemCenter - (_scrollOffset + screenCenter));
+    return SizedBox(
+      height: 400,
+      child: PageView.builder(
+        scrollDirection: Axis.horizontal,
+        controller: _controller,
+        itemCount: fastFoodShows.length,
+        itemBuilder: (context, index){
+          return AnimatedBuilder(
+            animation: _controller,
+            builder: (context, child){
 
-              // On normalise la distance pour que 0 = centre, 1 = un item plus loin à droite
-              double factor = distanceRelative / itemWidth;
+              double page = 0;
+              if(_controller.position.hasContentDimensions){
+                page = _controller.page!;
+              }else{
+                page = _controller.initialPage.toDouble();
+              }
 
-            final food = FastFoodShows[index];
-            return FoodcarouselItem(image: food['image']!, text: food['text']!);
-          },
-        )
-      ),
+              double angle = index - page;
+
+              return Transform.rotate(
+                angle: (angle.toInt() < 0) ? math.pi / 48 : (angle.toInt() > 0) ? -(math.pi / 48) : (angle.toInt() == 0) ? 0 : null!,
+                child: child,
+              );
+            },
+            child: Center(child: FoodcarouselItem(image: fastFoodShows[index]['image']!, text: fastFoodShows[index]['text']!)),
+          );
+        },
+      )
     );
   }
 }
