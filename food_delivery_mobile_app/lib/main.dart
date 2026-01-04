@@ -1,89 +1,83 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_delivery_mobile_app/Home/home.dart';
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Eat Fresh Pizza',
       theme: ThemeData(
-        useMaterial3: true, //Afin d'utiliser les dernieres verision des widgets de MaterialApp
+        primaryColor:const Color(0xFFFF5722) ,
+        useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-            seedColor: Color(0xFFFF5722),
-            primary: Color(0xFFFF5722),
-            onPrimary: Colors.white,
-            error: Colors.red
-          ), //Pour la defintion des couleurs à utiliser dans le body
-
-      ),
-      home:OnboardingScreen() ,
-    );
-  }
-
-}
-
-class OnboardingScreen extends StatelessWidget {
-  const OnboardingScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white, // On s'assure que le fond est blanc
-      body: SafeArea( // Empêche le contenu de passer sous l'encoche du téléphone
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, // Centre verticalement pour le moment
-          children: [
-             AfterCaroussel(), // Widget juste avant le bouton de swap 
-          ],
+          seedColor: const Color(0xFFFF5722),
+          primary: const Color(0xFFFF5722),
+          onPrimary: Colors.white,
         ),
       ),
+      home: Home(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class AfterCaroussel extends StatelessWidget {
-  const AfterCaroussel({super.key});
+// class OnboardingScreen extends StatelessWidget {
+//   const OnboardingScreen({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      // crossAxisAlignment aligne les textes à gauche ou au centre
-      crossAxisAlignment: CrossAxisAlignment.center, 
-      children: [
-        Text(
-          "Authentic Pizza",
-          style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.primary, // Utilise ton orange du thème
-          ),
-        ),
-        const SizedBox(height: 8), // Petit espace entre les deux textes
-        const Text(
-          "Delivered to Your Door!",
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w800, // Très gras comme sur l'image
-            color: Colors.black,
-          ),
-        ),
-        const SizedBox(height: 12),
-        const Text(
-          "Order now for authentic, delicious\nFresh pizza!", // \n pour passer à la ligne
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.grey,
-            fontSize: 14,
-          ),
-        ),
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       backgroundColor: Colors.white,
+//       // Suppression de l'AppBar pour un look plus "Onboarding" (plus d'espace)
+//       body: SafeArea(
+//         child: Column(
+//           children: [
+//             const SizedBox(height: 20),
+            
+//             // 1. La liste des pizzas (Le haut)
+//             const ListPizza(), 
+            
+//             // Un ressort pour espacer
+//             const Spacer(), 
+
+//             // 2. Les textes (Le milieu)
+//             const AfterCaroussel(), 
+            
+//             const Spacer(),
+
+//             // 3. Le bouton et le swipe (Le bas)
+//             const SwapBouton(),
+            
+//             const SizedBox(height: 10),
+//           ],
+//         ),
+//       ),
+
+//       bottomNavigationBar: const SizedBox(
+//         height: 60,
+//         child: Center(
+//           child: Text(
+//             "Privacy policy",
+//             style: TextStyle(
+//               color: Colors.grey,
+//               fontSize: 14,
+//               decoration: TextDecoration.underline,
+//             ),
+//           ),
+//         ),
+//       ),    
+//     );
+//   }
+// }
+
 
