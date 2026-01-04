@@ -1,8 +1,9 @@
+import 'dart:ui'; // Needed for ImageFilter
 import 'package:flutter/material.dart';
 import 'package:food_delivery_mobile_app/Accueil/components/body/searching_bar.dart';
 import 'detail_screen.dart';
 
-/// Écran d'accueil principal de l'application de livraison de pizzas
+/// App bar d'accueil principal de l'application de livraison de pizzas
 /// Affiche un catalogue de pizzas, une barre de recherche et une navigation inférieure
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -169,62 +170,109 @@ class HomeScreen extends StatelessWidget {
   /// [context] : Contexte pour la navigation
   Widget _buildPizzaCard(String imageUrl, BuildContext context) {
     return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
-              blurRadius: 10,
-              spreadRadius: 5,
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            // Image de la pizza avec coins arrondis
-            ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: Image.network(imageUrl, height: 100, fit: BoxFit.cover),
-            ),
-            const SizedBox(height: 10),
-            // Boutons d'action
-            Row(
-              children: [
-                // Bouton "Ajouter au panier"
-                Expanded(
-                  child: TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      "Add To Cart",
-                      style: TextStyle(fontSize: 10, color: Colors.black),
+      child: GestureDetector(
+        onTap: () => _showDetailsPanel(context),
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.1),
+                blurRadius: 10,
+                spreadRadius: 5,
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              // Image de la pizza avec coins arrondis
+              ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.network(imageUrl, height: 100, fit: BoxFit.cover),
+              ),
+              const SizedBox(height: 10),
+              // Boutons d'action
+              Row(
+                children: [
+                  // Bouton "Ajouter au panier"
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        "Add To Cart",
+                        style: TextStyle(fontSize: 10, color: Colors.black),
+                      ),
                     ),
                   ),
-                ),
-                // Bouton "Commander maintenant" en orange
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => DetailsScreen()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                  // Bouton "Commander maintenant" en orange
+                  ElevatedButton(
+                    onPressed: () => _showDetailsPanel(context),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orange,
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                    ),
+                    child: const Text(
+                      "Order Now",
+                      style: TextStyle(fontSize: 10, color: Colors.white),
+                    ),
                   ),
-                  child: const Text(
-                    "Order Now",
-                    style: TextStyle(fontSize: 10, color: Colors.white),
-                  ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  // Fonction pour afficher le panel de détails avec flou d'arrière-plan
+  void _showDetailsPanel(BuildContext context) {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: "Details",
+      barrierColor: Colors.black.withOpacity(
+        0.1,
+      ), // Légère ombre noire en plus du flou si désiré
+      transitionDuration: const Duration(milliseconds: 300),
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return Stack(
+          children: [
+            // Effet de flou sur tout l'arrière-plan
+            Positioned.fill(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), // Flou gaussien
+                child: Container(
+                  color: Colors
+                      .transparent, // Nécessaire pour que le filtre s'applique correctement
+                ),
+              ),
+            ),
+            // Le contenu de la page de détails qui arrive du bas
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                height:
+                    MediaQuery.of(context).size.height *
+                    0.85, // Prend 85% de la hauteur
+                child: const DetailsScreen(),
+              ),
+            ),
+          ],
+        );
+      },
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        // Animation de glissement vers le haut
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0, 1),
+            end: Offset.zero,
+          ).animate(CurvedAnimation(parent: animation, curve: Curves.easeOut)),
+          child: child,
+        );
+      },
     );
   }
 

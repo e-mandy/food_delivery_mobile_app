@@ -8,15 +8,13 @@ class Copyright extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Positioned(
-        bottom: 10,
-        child: Text(text,
-          style: TextStyle(
-            fontSize: 17,
-            decoration: TextDecoration.underline
-          )
-        )
-      )
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: Text(
+          text,
+          style: TextStyle(fontSize: 17, decoration: TextDecoration.underline),
+        ),
+      ),
     );
   }
 }

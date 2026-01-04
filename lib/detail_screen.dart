@@ -13,64 +13,91 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildImageHeader(context),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildPizzaInfo(),
-                        const SizedBox(height: 20),
-                        const Text(
-                          "Taille",
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 15),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            _buildSizeOption("Small", "6-7\""),
-                            _buildSizeOption("Medium", "8-10\""),
-                            _buildSizeOption("Large", "12-16\""),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        const Text(
-                          "Description",
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                        const Text(
-                          "Une pizza artisanale préparée avec des ingrédients frais et une pâte pétrie à la main.",
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+    // Note: No Scaffold here because this is meant to be an overlay.
+    // We use a Material widget to provide a surface for the content.
+    return Material(
+      color: Colors.transparent, // Transparent to show rounded corners
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(40),
+            topRight: Radius.circular(40),
+          ),
+        ),
+        child: Column(
+          children: [
+            // Handle/Grip for visual cue (optional but good for panels)
+            const SizedBox(height: 10),
+            Center(
+              child: Container(
+                width: 50,
+                height: 5,
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
             ),
-          ),
-          
 
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: _buildBottomAction(), 
-          ),
-        ],
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildImageHeader(context),
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildPizzaInfo(),
+                          const SizedBox(height: 20),
+                          const Text(
+                            "Taille",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 15),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              _buildSizeOption("Small", "6-7\""),
+                              _buildSizeOption("Medium", "8-10\""),
+                              _buildSizeOption("Large", "12-16\""),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          const Text(
+                            "Description",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const Text(
+                            "Une pizza artisanale préparée avec des ingrédients frais et une pâte pétrie à la main.",
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: _buildBottomAction(),
+            ),
+          ],
+        ),
       ),
     );
   }
-
-
 
   Widget _buildImageHeader(BuildContext context) {
     return Stack(
@@ -80,28 +107,36 @@ class _DetailsScreenState extends State<DetailsScreen> {
           width: double.infinity,
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(40), 
-              bottomRight: Radius.circular(40)
+              bottomLeft: Radius.circular(40),
+              bottomRight: Radius.circular(40),
+              // We also repeat top corners here to match the container if needed but the container clips it.
+              topLeft: Radius.circular(40),
+              topRight: Radius.circular(40),
             ),
             image: DecorationImage(
-              image: NetworkImage('https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000'),
+              image: NetworkImage(
+                'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000',
+              ),
               fit: BoxFit.cover,
             ),
           ),
         ),
         Positioned(
-          top: 40,
+          top: 20, // Adjusted padding
           left: 20,
           child: CircleAvatar(
             backgroundColor: Colors.white,
             child: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.black),
+              icon: const Icon(
+                Icons.close,
+                color: Colors.black,
+              ), // Changed to close icon
               onPressed: () => Navigator.pop(context),
             ),
           ),
         ),
         Positioned(
-          top: 40,
+          top: 20, // Adjusted padding
           right: 20,
           child: CircleAvatar(
             backgroundColor: Colors.orange,
@@ -119,15 +154,31 @@ class _DetailsScreenState extends State<DetailsScreen> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Pizza Pizza", style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
+            const Text(
+              "Pizza Pizza",
+              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+            ),
             Text("Italian Style", style: TextStyle(color: Colors.grey[600])),
           ],
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            const Text("\$13.21", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.orange)),
-            Text("\$14.99", style: TextStyle(decoration: TextDecoration.lineThrough, color: Colors.grey[400])),
+            const Text(
+              "\$13.21",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.orange,
+              ),
+            ),
+            Text(
+              "\$14.99",
+              style: TextStyle(
+                decoration: TextDecoration.lineThrough,
+                color: Colors.grey[400],
+              ),
+            ),
           ],
         ),
       ],
@@ -144,14 +195,29 @@ class _DetailsScreenState extends State<DetailsScreen> {
         decoration: BoxDecoration(
           color: isSelected ? Colors.orange.withOpacity(0.1) : Colors.grey[50],
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: isSelected ? Colors.orange : Colors.transparent, width: 2),
+          border: Border.all(
+            color: isSelected ? Colors.orange : Colors.transparent,
+            width: 2,
+          ),
         ),
         child: Column(
           children: [
-            Icon(Icons.local_pizza, color: isSelected ? Colors.orange : Colors.grey),
+            Icon(
+              Icons.local_pizza,
+              color: isSelected ? Colors.orange : Colors.grey,
+            ),
             const SizedBox(height: 5),
-            Text(name, style: TextStyle(fontWeight: FontWeight.bold, color: isSelected ? Colors.orange : Colors.black)),
-            Text(detail, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+            Text(
+              name,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: isSelected ? Colors.orange : Colors.black,
+              ),
+            ),
+            Text(
+              detail,
+              style: const TextStyle(fontSize: 12, color: Colors.grey),
+            ),
           ],
         ),
       ),
@@ -177,7 +243,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
               ),
               Text(
                 quantity.toString().padLeft(2, '0'),
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               IconButton(
                 onPressed: () => setState(() => quantity++),
@@ -191,17 +260,25 @@ class _DetailsScreenState extends State<DetailsScreen> {
           child: ElevatedButton(
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("$quantity Pizzas ajoutées au panier !")),
+                SnackBar(
+                  content: Text("$quantity Pizzas ajoutées au panier !"),
+                ),
               );
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.orange,
               padding: const EdgeInsets.symmetric(vertical: 20),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
             ),
             child: const Text(
               "Order Now",
-              style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),
