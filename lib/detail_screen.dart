@@ -60,18 +60,17 @@ class _DetailsScreenState extends State<DetailsScreen> {
             ),
           ),
           
-          // --- CORRECTION ICI ---
-          // On ajoute un Padding pour que le bouton ne touche pas les bords
+
           Padding(
             padding: const EdgeInsets.all(20.0),
-            child: _buildBottomAction(), // J'ai retiré "Bar" pour correspondre à ton nom de fonction
+            child: _buildBottomAction(), 
           ),
         ],
       ),
     );
   }
 
-  // --- COMPOSANTS ---
+
 
   Widget _buildImageHeader(BuildContext context) {
     return Stack(
