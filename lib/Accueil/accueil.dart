@@ -18,7 +18,9 @@ class _AccueilState extends State<Accueil> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: FoodAppBar(),
-      body: SafeArea(child: SingleChildScrollView(
+      body: SafeArea(
+        top: true,
+        child: SingleChildScrollView(
         child: Column(
           children: [
             SearchingBar(),

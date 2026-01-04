@@ -42,13 +42,14 @@ class _FoodCarouselState extends State<FoodCarousel> {
             builder: (context, child){
 
               double page = 0;
+              double angle = 0.0;
               if(_controller.position.hasContentDimensions){
                 page = _controller.page!;
+                angle = index - page;
               }else{
                 page = _controller.initialPage.toDouble();
               }
 
-              double angle = index - page;
 
               return Transform.rotate(
                 angle: (angle.toInt() < 0) ? -(math.pi / 48) : (angle.toInt() > 0) ? (math.pi / 48) : (angle.toInt() == 0) ? 0 : null!,

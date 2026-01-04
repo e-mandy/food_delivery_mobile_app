@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_mobile_app/Accueil/accueil.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
 class SwiperAction extends StatefulWidget {
@@ -33,7 +34,14 @@ class _SwiperActionState extends State<SwiperAction> {
                   Icon(Icons.keyboard_double_arrow_right)
                 ],
               ),
-            )
+            ),
+            onSubmit: (){
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => Accueil())
+              );
+              return null;
+            },
           ),
           
       ),
