@@ -47,7 +47,7 @@ class _FoodCarouselState extends State<FoodCarousel> {
                 page = _controller.page!;
                 angle = index - page;
               }else{
-                page = _controller.initialPage.toDouble();
+                page = 0;
               }
 
 
