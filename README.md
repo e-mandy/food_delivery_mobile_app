@@ -7,7 +7,7 @@ Une application mobile destinée à permettre à tout utilisateur, de passer une
 Ce projet s'inscrit dans une démarche académique et vise à renforcer les compétences et les aptitudes des membres de l'équipe en développement d'application Flutter.
 
 ## MEMBRES D'ÉQUIPE
-  - ATOHOUN ANDY
+  - ATOHOUN Andy
   - MESSOHOUSSOUNOU Caleb
   - AÏHOUNHIN Eunock
   - HOUEHO Vianney
