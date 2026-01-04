@@ -11,12 +11,12 @@ class _FoodCategorieState extends State<FoodCategorie> {
   @override
   Widget build(BuildContext context) {
 
-    final List<String> foodCategories = [
-      "Neapolitan",
-      "Margherita"
-      "Pepperoni",
-      "Quatres Saison",
-      "Royale Pizza"
+    final List<Map<String, bool>> foodCategories = [
+      {"Margherita": true},
+      {"Pepperoni": false},
+      {"Végétarien": false},
+      {"Quatres Saisons": false},
+      {"Royale Pizza": false},
     ];
 
     return Container(
@@ -32,18 +32,19 @@ class _FoodCategorieState extends State<FoodCategorie> {
                 children: [
                   ...foodCategories.map((category){
                     return OutlinedButton(
-                      onPressed: (){}, 
+                      onPressed: (){},
                       style: OutlinedButton.styleFrom(
-                      side: BorderSide(
-                        color: Colors.black
-                      )
-                    ),
-                    child: Text(category, 
-                      style: 
-                        TextStyle(
-                          color: Colors.black
+                        
+                        backgroundColor: category.values.first ? Theme.of(context).primaryColor : Colors.transparent,
+                        side: BorderSide(
+                          color: category.values.first ? Colors.white : Colors.black
                         )
-                    ),
+                      ),
+                      child: Text(category.keys.first, 
+                        style: TextStyle(
+                          color: category.values.first ? Colors.white : Colors.black
+                        )
+                      ),
                     );
                   }),
                 ],
