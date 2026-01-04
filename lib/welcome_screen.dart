@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_mobile_app/LandingPage/components/copyright.dart';
+import 'package:food_delivery_mobile_app/LandingPage/components/food_carousel.dart';
+import 'package:food_delivery_mobile_app/LandingPage/components/landing_title.dart';
+import 'package:food_delivery_mobile_app/LandingPage/components/scrolling_bar.dart';
 import 'home_screen.dart'; 
 import 'package:slider_button/slider_button.dart';
 
@@ -15,67 +19,26 @@ class WelcomeScreen extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _buildCategoryItem("Neapolitan", Colors.orange),
-                  _buildCategoryItem("Margherita", Colors.black),
-                  _buildCategoryItem("Pepperoni", Colors.orange),
-                ],
-              ),
+              
+              // Scrolling bar de la première section de la landing page
+              ScrollingBar(),
 
               const SizedBox(height: 16),
-              AspectRatio(
-                aspectRatio: 16 / 9,
-                child: Container(
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4T5DnkHaRm_TuNPFySDqHUlRlUL5ptclqNA&s',
-                      ),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
+              
+              // Section carousel de la landing page
+              FoodCarousel(),
 
               const SizedBox(height: 16),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40),
-                child: Column(
-                  children: [
-                    Text(
-                      "Authentic Pizza",
-                      style: TextStyle(
-                        color: Colors.orange,
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      "Delivered to Your Door!",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      "Order now for authentic, delicious\nFresh pizza!",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.grey, fontSize: 16),
-                    ),
-                  ],
-                ),
-              ),
+              
+              LandingTitle(),
 
               const SizedBox(height: 24),
 
               _buildSwipeButton(context),
            
               const SizedBox(height: 20),
+
+              Copyright(text: "Privacy Policy")
             ],
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_mobile_app/LandingPage/landing_page.dart';
 
 import 'welcome_screen.dart'; 
 
@@ -16,6 +17,7 @@ class PizzaApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.orange,
+        primaryColor: Colors.deepOrange,
         scaffoldBackgroundColor: Colors.white,
       ),
       home: const WelcomeScreen(), 

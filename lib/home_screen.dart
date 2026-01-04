@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_mobile_app/Accueil/components/body/searching_bar.dart';
 import 'detail_screen.dart';
 
 /// Écran d'accueil principal de l'application de livraison de pizzas
@@ -25,7 +26,7 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 25),
 
               // Barre de recherche de pizzas
-              _buildSearchBar(),
+              SearchingBar(),
 
               const SizedBox(height: 25),
 
