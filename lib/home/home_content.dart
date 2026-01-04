@@ -1,8 +1,63 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
-class HomeContent extends StatelessWidget {
+class HomeContent extends StatefulWidget {
   final VoidCallback onOpenDetails;
   const HomeContent({super.key, required this.onOpenDetails});
+
+  @override
+  State<HomeContent> createState() => _HomeContentState();
+}
+
+class _HomeContentState extends State<HomeContent> {
+  late PageController _pageController;
+  late Timer _timer;
+  int _currentPage = 0;
+
+  final List<Map<String, dynamic>> _trendingPizzas = [
+    {
+      'title': 'Get A\nSlice',
+      'color': const Color(0xFFFFF8E1),
+      'image': 'assets/images/trending_pizza.png',
+    },
+    {
+      'title': 'Pizza\nParty',
+      'color': const Color(0xFFFFE0E0),
+      'image': 'assets/images/trending_pizza.png',
+    },
+    {
+      'title': 'Fresh\nBaked',
+      'color': const Color(0xFFE0F7FA),
+      'image': 'assets/images/trending_pizza.png',
+    },
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+    _startAutoScroll();
+  }
+
+  void _startAutoScroll() {
+    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      if (_pageController.hasClients) {
+        final nextPage = (_currentPage + 1) % _trendingPizzas.length;
+        _pageController.animateToPage(
+          nextPage,
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,122 +185,161 @@ class HomeContent extends StatelessWidget {
 
         const SizedBox(height: 15),
 
-        // Trending Pizza Card
-        GestureDetector(
-          onTap: onOpenDetails,
-          child: Stack(
-            children: [
-              Container(
-                height: 220,
-                width: double.infinity,
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFFF8E1), // Light yellow bg
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: const BoxDecoration(
-                        color: Colors.deepOrange,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.favorite_border,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    const Text(
-                      "Get A\nSlice",
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w800,
-                        height: 1.1,
-                        fontFamily: 'Roboto', // Assuming default font
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    // Custom bottom navigation bar inside the card approximation
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
-                            blurRadius: 5,
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 8,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.deepOrange,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: const Text(
-                              "Home",
-                              style: TextStyle(
+        // Trending Pizza Carousel
+        SizedBox(
+          height: 220,
+          child: PageView.builder(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() {
+                _currentPage = index;
+              });
+            },
+            itemCount: _trendingPizzas.length,
+            itemBuilder: (context, index) {
+              final pizza = _trendingPizzas[index];
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: GestureDetector(
+                  onTap: widget.onOpenDetails,
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: 220,
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: pizza['color'],
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: const BoxDecoration(
+                                color: Colors.deepOrange,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.favorite_border,
                                 color: Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
+                                size: 20,
                               ),
                             ),
-                          ),
-                          const SizedBox(width: 12),
-                          const Icon(
-                            Icons.search,
-                            size: 22,
-                            color: Colors.grey,
-                          ),
-                          const SizedBox(width: 12),
-                          const Icon(
-                            Icons.favorite_border,
-                            size: 22,
-                            color: Colors.grey,
-                          ),
-                          const SizedBox(width: 12),
-                          const Icon(
-                            Icons.person_outline,
-                            size: 22,
-                            color: Colors.grey,
-                          ),
-                        ],
+                            const SizedBox(height: 15),
+                            Text(
+                              pizza['title'],
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w800,
+                                height: 1.1,
+                                fontFamily: 'Roboto',
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 8,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(30),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.05),
+                                    blurRadius: 5,
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 8,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.deepOrange,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: const Text(
+                                      "Home",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  const Icon(
+                                    Icons.search,
+                                    size: 22,
+                                    color: Colors.grey,
+                                  ),
+                                  const SizedBox(width: 12),
+                                  const Icon(
+                                    Icons.favorite_border,
+                                    size: 22,
+                                    color: Colors.grey,
+                                  ),
+                                  const SizedBox(width: 12),
+                                  const Icon(
+                                    Icons.person_outline,
+                                    size: 22,
+                                    color: Colors.grey,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              Positioned(
-                right: -40,
-                top: 0,
-                bottom: 0,
-                child: Hero(
-                  tag: 'trending_pizza',
-                  child: Image.asset(
-                    "assets/images/trending_pizza.png",
-                    height: 180,
-                    fit: BoxFit.contain,
+                      Positioned(
+                        right: -40,
+                        top: 0,
+                        bottom: 0,
+                        child: Hero(
+                          tag: 'trending_pizza_$index',
+                          child: Image.asset(
+                            pizza['image'],
+                            height: 180,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-            ],
+              );
+            },
           ),
         ),
+
+        const SizedBox(height: 15),
+
+        // Page Indicators
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(
+            _trendingPizzas.length,
+            (index) => Container(
+              margin: const EdgeInsets.symmetric(horizontal: 4),
+              width: _currentPage == index ? 24 : 8,
+              height: 8,
+              decoration: BoxDecoration(
+                color: _currentPage == index
+                    ? Colors.deepOrange
+                    : Colors.grey.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(4),
+              ),
+            ),
+          ),
+        ),
+
         const SizedBox(height: 80),
       ],
     );

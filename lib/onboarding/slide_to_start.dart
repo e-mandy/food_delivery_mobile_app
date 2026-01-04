@@ -8,11 +8,11 @@ class SlideToStart extends StatefulWidget {
   final Widget? icon;
 
   const SlideToStart({
-    Key? key,
+    super.key,
     required this.onSubmitted,
     this.text = "Swipe to Explore",
     this.icon,
-  }) : super(key: key);
+  });
 
   @override
   State<SlideToStart> createState() => _SlideToStartState();

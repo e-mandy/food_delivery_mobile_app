@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_mobile_app/home/home.dart';
 import 'package:food_delivery_mobile_app/onboarding/slide_to_start.dart';
@@ -11,6 +12,10 @@ class OnboardingPage extends StatefulWidget {
 
 class _OnboardingPageState extends State<OnboardingPage> {
   late ScrollController _scrollController;
+  late PageController _pageController;
+  late Timer _carouselTimer;
+  int _currentPage = 0;
+
   final List<String> _pizzaTypes = [
     "Neapolitan",
     "Margherita",
@@ -22,12 +27,31 @@ class _OnboardingPageState extends State<OnboardingPage> {
     "Chicago Deep Dish",
   ];
 
+  final List<Map<String, String>> _onboardingCards = [
+    {
+      'title': 'The\nPizza\nBurger\nPie',
+      'image': 'assets/images/pizza_burger_pie.png',
+    },
+    {
+      'title': 'Fresh\nHot\nPizza',
+      'image': 'assets/images/pizza_burger_pie.png',
+    },
+    {
+      'title': 'Tasty\nFood\nDelivery',
+      'image': 'assets/images/pizza_burger_pie.png',
+    },
+  ];
+
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
+    _pageController = PageController();
     // Start scrolling after the widget is built
-    WidgetsBinding.instance.addPostFrameCallback((_) => _startAutoScroll());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _startAutoScroll();
+      _startCarouselAutoScroll();
+    });
   }
 
   void _startAutoScroll() {
@@ -50,9 +74,24 @@ class _OnboardingPageState extends State<OnboardingPage> {
     }
   }
 
+  void _startCarouselAutoScroll() {
+    _carouselTimer = Timer.periodic(const Duration(seconds: 4), (timer) {
+      if (_pageController.hasClients) {
+        final nextPage = (_currentPage + 1) % _onboardingCards.length;
+        _pageController.animateToPage(
+          nextPage,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
+  }
+
   @override
   void dispose() {
     _scrollController.dispose();
+    _pageController.dispose();
+    _carouselTimer.cancel();
     super.dispose();
   }
 
@@ -103,50 +142,83 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
             const Spacer(),
 
-            // Main Image Card
+            // Main Image Carousel
             Expanded(
               flex: 5,
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 30),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  image: const DecorationImage(
-                    image: AssetImage('assets/images/pizza_burger_pie.png'),
-                    fit: BoxFit.cover,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      blurRadius: 15,
-                      offset: const Offset(0, 10),
+              child: PageView.builder(
+                controller: _pageController,
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentPage = index;
+                  });
+                },
+                itemCount: _onboardingCards.length,
+                itemBuilder: (context, index) {
+                  final card = _onboardingCards[index];
+                  return Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 30),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      image: DecorationImage(
+                        image: AssetImage(card['image']!),
+                        fit: BoxFit.cover,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 15,
+                          offset: const Offset(0, 10),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                child: Stack(
-                  children: [
-                    Positioned(
-                      top: 20,
-                      left: 20,
-                      child: SizedBox(
-                        width: 150,
-                        child: Text(
-                          "The\nPizza\nBurger\nPie",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                            height: 0.9,
-                            shadows: [
-                              Shadow(
-                                color: Colors.black.withOpacity(0.5),
-                                blurRadius: 5,
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: 20,
+                          left: 20,
+                          child: SizedBox(
+                            width: 150,
+                            child: Text(
+                              card['title']!,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 32,
+                                fontWeight: FontWeight.bold,
+                                height: 0.9,
+                                shadows: [
+                                  Shadow(
+                                    color: Colors.black.withOpacity(0.5),
+                                    blurRadius: 5,
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
+                  );
+                },
+              ),
+            ),
+
+            const SizedBox(height: 15),
+
+            // Page Indicators
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                _onboardingCards.length,
+                (index) => Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  width: _currentPage == index ? 24 : 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: _currentPage == index
+                        ? Colors.deepOrange
+                        : Colors.grey.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
                 ),
               ),
             ),
