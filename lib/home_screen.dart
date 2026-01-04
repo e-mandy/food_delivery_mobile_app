@@ -12,6 +12,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      extendBody: true, 
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -61,7 +62,6 @@ class HomeScreen extends StatelessWidget {
               // Espacement pour éviter que le contenu soit caché par la barre de navigation flottante
               const SizedBox(height: 100),
 
-
               // Titre "Trending Pizza"
               const Text(
                 "Trending Pizza",
@@ -72,9 +72,7 @@ class HomeScreen extends StatelessWidget {
               // Bannière de pizza tendance avec promotion
               _buildTrendingPizza(),
 
-
               const SizedBox(height: 15),
-
 
               // Grille de cartes de pizzas (deux cartes côte à côte)
             ],
@@ -281,58 +279,60 @@ class HomeScreen extends StatelessWidget {
   }
 
   /// Construit la barre de navigation inférieure personnalisée avec effet flottant
-  /// Affiche les icônes : Accueil, Recherche, Favoris, Profil
-  Widget _buildBottomNav() {
-    return Container(
-      margin: const EdgeInsets.all(20), // Crée l'effet "flottant"
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(40),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          // Bouton Accueil actif (avec fond orange)
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-            decoration: BoxDecoration(
-              color: Colors.orange,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: const Row(
-              children: [
-                Icon(Icons.home, color: Colors.white),
-                SizedBox(width: 8),
-                Text(
-                  "Home",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          // Icône de recherche
-          const Icon(Icons.search, color: Colors.grey),
-          // Icône de favoris
-          const Icon(Icons.favorite_border, color: Colors.grey),
-          // Icône de profil
-          const Icon(Icons.person_outline, color: Colors.grey),
-        ],
-      ),
-    );
-  }
 }
 
+/// Affiche les icônes : Accueil, Recherche, Favoris, Profil
+Widget _buildBottomNav() {
+  return Container(
+    // Marges équilibrées pour un look centré et flottant
+    margin: const EdgeInsets.fromLTRB(25, 0, 25, 30), 
+    child: ClipRRect( // Clip pour que le flou ne dépasse pas des arrondis
+      borderRadius: BorderRadius.circular(40),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10), // Effet de flou "Glass"
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          decoration: BoxDecoration(
+            // Blanc très transparent
+            color: Colors.white.withOpacity(0.7), 
+            borderRadius: BorderRadius.circular(40),
+            border: Border.all(color: Colors.white.withOpacity(0.2)), // Bordure fine
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 20,
+                offset: const Offset(0, 10),
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Bouton Accueil
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.orange,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: const Row(
+                  children: [
+                    Icon(Icons.home, color: Colors.white),
+                    SizedBox(width: 8),
+                    Text("Home", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                  ],
+                ),
+              ),
+              const Icon(Icons.search, color: Colors.grey),
+              const Icon(Icons.favorite_border, color: Colors.grey),
+              const Icon(Icons.person_outline, color: Colors.grey),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
 /// Construit la bannière "Trending Pizza" avec promotion et image
 /// Affiche un message promotionnel avec image de pizza positionnée à droite
 /// et un bouton favori en haut à gauche
