@@ -44,22 +44,6 @@ class HomeScreen extends StatelessWidget {
 
               const SizedBox(height: 30),
 
-              // Titre "Trending Pizza"
-              const Text(
-                "Trending Pizza",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 15),
-
-              // Bannière de pizza tendance avec promotion
-              _buildTrendingPizza(),
-
-              // Espacement pour éviter que le contenu soit caché par la barre de navigation flottante
-              const SizedBox(height: 100),
-
-              const SizedBox(height: 15),
-
-              // Grille de cartes de pizzas (deux cartes côte à côte)
               Row(
                 children: [
                   _buildPizzaCard(
@@ -73,6 +57,26 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
+
+              // Espacement pour éviter que le contenu soit caché par la barre de navigation flottante
+              const SizedBox(height: 100),
+
+
+              // Titre "Trending Pizza"
+              const Text(
+                "Trending Pizza",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 15),
+
+              // Bannière de pizza tendance avec promotion
+              _buildTrendingPizza(),
+
+
+              const SizedBox(height: 15),
+
+
+              // Grille de cartes de pizzas (deux cartes côte à côte)
             ],
           ),
         ),

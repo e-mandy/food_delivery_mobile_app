@@ -24,10 +24,9 @@ class _AccueilState extends State<Accueil> {
         child: Column(
           children: [
             SearchingBar(),
-            FoodCategorie(),
+            TrendingFood(),
             FoodList(),
-            TrendingFood()
-
+            FoodCategorie(),
           ],
         )
       )),
