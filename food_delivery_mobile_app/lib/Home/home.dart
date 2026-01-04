@@ -14,7 +14,7 @@ class Home extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Eat Fresh Pizza" , style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600,)), 
+        title: const Text("Eat Fresh Pizza" , style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,)), 
         actions: const [
           Icon(Icons.notifications, shadows: [Shadow(color: Colors.black12)],), 
           SizedBox(width: 15), // Un petit espace pour ne pas coller au bord
@@ -24,35 +24,14 @@ class Home extends ConsumerWidget {
 
 
       extendBody: true,
-      body: SafeArea(
-        child: IndexedStack(
+        body: IndexedStack(
           index: ref.watch(indexRef),
           children: [
             HomeContainer(),
             Favoris()
           ],
-        ) 
+        ), 
         
-      ),
-
-      // bottomNavigationBar: Padding(
-      //   padding: const EdgeInsets.all(8.0),
-      //   child: BottomNavigationBar(
-      //     type: BottomNavigationBarType.fixed,
-      //     selectedItemColor: iconColor,
-      //     unselectedItemColor: Colors.grey,
-      //     currentIndex: currentIndex,
-      //     onTap: (click) {
-      //       ref.read(indexRef.notifier).state = click;
-      //     },
-      //     items: [
-      //       BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-      //       // BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
-      //       BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "Favoris"),
-      //       // BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profil"),
-      //     ],
-      //   ),
-      // ),
 
 
       bottomNavigationBar: Padding(
@@ -61,7 +40,7 @@ class Home extends ConsumerWidget {
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withOpacity(0.05),
                 blurRadius: 20,
                 offset: const Offset(0, 5),
               ),
@@ -71,7 +50,8 @@ class Home extends ConsumerWidget {
             borderRadius: BorderRadius.circular(30), // On arrondit fortement les coins
             child: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
-              backgroundColor: Colors.white, // Obligatoire pour voir l'effet
+              backgroundColor: Colors.white.withOpacity(0.7), // Obligatoire pour voir l'effet
+              elevation: 0,
               selectedItemColor: Colors.deepOrange,
               currentIndex: currentIndex,
               unselectedItemColor: Colors.grey,
