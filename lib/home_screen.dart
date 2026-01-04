@@ -285,7 +285,7 @@ class HomeScreen extends StatelessWidget {
 Widget _buildBottomNav() {
   return Container(
     // Marges équilibrées pour un look centré et flottant
-    margin: const EdgeInsets.fromLTRB(25, 0, 25, 30), 
+    margin: const EdgeInsets.fromLTRB(80, 0, 120, 90), 
     child: ClipRRect( // Clip pour que le flou ne dépasse pas des arrondis
       borderRadius: BorderRadius.circular(40),
       child: BackdropFilter(
