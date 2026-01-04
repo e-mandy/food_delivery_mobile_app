@@ -14,14 +14,39 @@ class Home extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Eat Fresh Pizza" , style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,)), 
-        actions: const [
-          Icon(Icons.notifications, shadows: [Shadow(color: Colors.black12)],), 
-          SizedBox(width: 15), // Un petit espace pour ne pas coller au bord
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: RichText(
+          text: const TextSpan(
+            style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.black),
+            children: [
+              TextSpan(text: "Eat Fresh "),
+              TextSpan(text: "Pizza 🍕", style: TextStyle(color: Colors.deepOrange)),
+            ],
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 15),
+            child: CircleAvatar(
+              backgroundColor: Colors.grey.shade100,
+              child: Stack(
+                children: [
+                  const Icon(Icons.notifications_none_outlined, color: Colors.black),
+                  Positioned(
+                    right: 2,
+                    top: 2,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
         ],
-        
       ),
-
 
       extendBody: true,
         body: IndexedStack(
